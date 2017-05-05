@@ -1,0 +1,43 @@
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                      http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+  version="3.1"
+  metadata-complete="true" >
+  	<!-- 修改servlet版本为3.1 -->
+  	
+  	<!-- 解决post的乱码 -->
+	<filter>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<!-- 初始化参数，设置编码为utf-8 -->
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>utf-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+  	<!-- 配置DispatcherServlet -->
+  	<servlet>
+  		<servlet-name>userLogin</servlet-name>
+  		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+  		<!-- 配置springMVC需要加载的配置文件
+  			spring-dao.xml,spring-service.xml,spring-web.xml
+  			Mybatis -> spring  -> springMVC
+  		 -->
+  		<init-param>
+  			<param-name>contextConfigLocation</param-name>
+  			<param-value>classpath:spring/spring-*.xml</param-value>
+  		</init-param>
+  	    <load-on-startup>1</load-on-startup>
+  	</servlet>
+  	<servlet-mapping>
+		<servlet-name>userLogin</servlet-name> 
+		<!-- 默认匹配所有的请求 --> 	
+  		<url-pattern>/</url-pattern>
+  	</servlet-mapping>
+  </web-app>
